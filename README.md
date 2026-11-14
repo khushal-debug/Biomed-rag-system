@@ -17,6 +17,23 @@ Evaluated across **100 PubMedQA ground-truth question-abstract pairs**:
 
 **Key Engineering Takeaway:** On structured biomedical abstracts (`PubMedQA`), normalized `bge-small-en-v1.5` embeddings achieve **99% Hit Rate@5** and **0.985 MRR** in under **20 ms**, whereas general-domain MS-MARCO Cross-Encoder re-ranking adds ~2.5s CPU overhead—justifying a toggleable re-ranker design in production.
 
+
+### Benchmark Methodology
+
+- Evaluation queries: 100 PubMedQA ground-truth question-abstract pairs.
+- Retrieval approaches: FAISS dense retrieval and FAISS + Cross-Encoder reranking.
+- Metrics: Hit Rate@5, Mean Reciprocal Rank (MRR), and average CPU retrieval latency.
+- The same evaluation query set was used to compare both retrieval configurations.
+
+### Key Findings
+
+Dense retrieval achieved 99% Hit Rate@5 and 0.9850 MRR with an average retrieval latency of 19.61 ms.
+
+Adding Cross-Encoder reranking maintained 99% Hit Rate@5, while MRR changed to 0.9783 and average CPU retrieval latency increased to 2520.39 ms.
+
+The results demonstrate that additional reranking complexity did not improve the measured ranking metrics on this evaluation set. The application therefore supports a configurable retrieval approach.
+
+
 ## 🛠️ Tech Stack
 
 - **Deep Learning & NLP:** PyTorch, Hugging Face `sentence-transformers`, `datasets`
